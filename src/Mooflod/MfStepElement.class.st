@@ -22,6 +22,13 @@ MfStepElement >> backgroundPaint [
 	^ Color white.
 ]
 
+{ #category : 'public' }
+MfStepElement >> click [ 
+
+	instrument := instrument not.
+	self updateBackgroundPaint
+]
+
 { #category : 'initialization' }
 MfStepElement >> initialize [
 
@@ -29,7 +36,18 @@ MfStepElement >> initialize [
 	instrument := false.
 	self size: self stepExtent.
 	self background: self backgroundPaint.
-	self constraintsDo: [ :e | e frame vertical alignCenter. e margin: (BlInsets all: 2) ].
+	self initializeEvents.
+	self constraintsDo: [ :e |
+		e frame vertical alignCenter.
+		e margin: (BlInsets all: 2) ]
+]
+
+{ #category : 'initialization' }
+MfStepElement >> initializeEvents [ 
+
+	self addEventHandlerOn: BlClickEvent do: [ 
+		self click ]
+
 ]
 
 { #category : 'accessing' }
@@ -50,4 +68,13 @@ MfStepElement >> stepExtent [
 	"Size of a bar"
 
 	^ 15 @ 21
+]
+
+{ #category : 'as yet unclassified' }
+MfStepElement >> updateBackgroundPaint [
+
+	self
+		background: (instrument
+		ifTrue: [ Color black ]
+		ifFalse: [ Color white ])
 ]

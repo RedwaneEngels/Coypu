@@ -80,24 +80,20 @@ MfPatternElement >> addSeqStepsToThePattern: anArrayOfGates [
 MfPatternElement >> addStepsToThePattern: nbSteps [
 	"Add all bars element in the pattern to display them"
 
-	| step |
 	nbOfSteps := 0.
 	(nbSteps between: min and: max) ifTrue: [
 		nbOfSteps := nbSteps.
 		nbSteps <= 16
 			ifTrue: [
 				1 to: nbSteps do: [ :i |
-					step := MfStepElement new.
-					self addChild: step ] ]
+					self newChild] ]
 			ifFalse: [
 				1 to: 16 do: [ :i |
-					step := MfStepElement new.
-					self addChild: step ].
+					self newChild ].
 				17 to: nbSteps do: [ :i |
-					step := MfStepElement new.
-					self addChildToQueue: step ] ] ].
-	self constraintsDo: [ :c | c horizontal fitContent ].
-	self addInstrumentToStep
+					self newChildInQueue ] ] ].
+	self constraintsDo: [ :c | c horizontal fitContent ]
+	"self addInstrumentToStep"
 ]
 
 { #category : 'visual properties' }
@@ -185,6 +181,18 @@ MfPatternElement >> nbsteps: someNbSteps [
 
 	nbsteps := someNbSteps.
 	self addStepsToThePattern: nbsteps
+]
+
+{ #category : 'instance creation' }
+MfPatternElement >> newChild [ 
+
+self addChild: MfStepElement new
+]
+
+{ #category : 'instance creation' }
+MfPatternElement >> newChildInQueue [
+
+	self addChildToQueue: MfStepElement new
 ]
 
 { #category : 'initialization' }
