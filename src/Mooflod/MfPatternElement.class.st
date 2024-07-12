@@ -5,6 +5,7 @@ Class {
 		'nbOfSteps'
 	],
 	#classVars : [
+		'childrenQueue',
 		'max',
 		'min',
 		'nbsteps'
@@ -30,6 +31,12 @@ MfPatternElement class >> exampleSimplePattern [
 
 	space show.
 	^ patternelem
+]
+
+{ #category : 'adding' }
+MfPatternElement >> addChildToQueue: aMfStepElement [ 
+
+	childrenQueue addLast: aMfStepElement
 ]
 
 { #category : 'adding' }
@@ -72,18 +79,23 @@ MfPatternElement >> addSeqStepsToThePattern: anArrayOfGates [
 { #category : 'adding' }
 MfPatternElement >> addStepsToThePattern: nbSteps [
 	"Add all bars element in the pattern to display them"
-	
-	| step "changingX" |
+
+	| step |
 	nbOfSteps := 0.
-	"changingX := 1.25."
 	(nbSteps between: min and: max) ifTrue: [
 		nbOfSteps := nbSteps.
-		1 to: nbSteps do: [ :i |
-			step := MfStepElement new.
-			"step transformDo: [ :t | t translateBy: changingX @ 0 ].
-			changingX := changingX + 17.5."
-			self addChild: step ] ].
-	"self size: 17.5 * nbSteps @ 25."
+		nbSteps <= 16
+			ifTrue: [
+				1 to: nbSteps do: [ :i |
+					step := MfStepElement new.
+					self addChild: step ] ]
+			ifFalse: [
+				1 to: 16 do: [ :i |
+					step := MfStepElement new.
+					self addChild: step ].
+				17 to: nbSteps do: [ :i |
+					step := MfStepElement new.
+					self addChildToQueue: step ] ] ].
 	self constraintsDo: [ :c | c horizontal fitContent ].
 	self addInstrumentToStep
 ]
@@ -92,6 +104,18 @@ MfPatternElement >> addStepsToThePattern: nbSteps [
 MfPatternElement >> backgroundPaint [ 
 	"Define the background for the pattern"
 	^ Color red
+]
+
+{ #category : 'as yet unclassified' }
+MfPatternElement >> childrenQueue [ 
+
+	^ childrenQueue 
+]
+
+{ #category : 'as yet unclassified' }
+MfPatternElement >> childrenQueue: aCollection [ 
+
+	childrenQueue := aCollection 
 ]
 
 { #category : 'adding' }
@@ -107,6 +131,7 @@ MfPatternElement >> forSequencer: aSequencer [
 MfPatternElement >> initialize [
 
 	super initialize.
+	childrenQueue := OrderedCollection new.
 	self size: self patternExtent.
 	self geometry: BlRectangleGeometry new.
 	self layout: BlLinearLayout horizontal.
@@ -172,4 +197,15 @@ MfPatternElement >> newMooFlodSkin [
 MfPatternElement >> patternExtent [
 
 	^ 18 @ 25
+]
+
+{ #category : 'as yet unclassified' }
+MfPatternElement >> translateStep [
+
+	| first nextStep |
+	first := self children first.
+	self removeChild: first.
+	self addChildToQueue: first.
+	nextStep := self childrenQueue removeFirst.
+	self addChild: nextStep
 ]
