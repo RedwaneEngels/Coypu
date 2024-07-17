@@ -1,6 +1,6 @@
 Class {
-	#name : #MfVisualizerElement,
-	#superclass : #ToElement,
+	#name : 'MfVisualizerElement',
+	#superclass : 'ToElement',
 	#instVars : [
 		'nbTracks',
 		'animation',
@@ -12,10 +12,12 @@ Class {
 	#classVars : [
 		'level'
 	],
-	#category : #'Mooflod-VisualizerRepresentation'
+	#category : 'Mooflod-VisualizerRepresentation',
+	#package : 'Mooflod',
+	#tag : 'VisualizerRepresentation'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 MfVisualizerElement class >> exampleVisualizer [
 
 	<script>
@@ -33,7 +35,7 @@ MfVisualizerElement class >> exampleVisualizer [
 	^ v
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 MfVisualizerElement >> addElementsLevelFour: aName [
 
 	| sect slider1 slider2 |
@@ -51,7 +53,7 @@ MfVisualizerElement >> addElementsLevelFour: aName [
 		secondSlider: slider2
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 MfVisualizerElement >> addElementsLevelOne: aName [
 
 	| label name sect square |
@@ -73,7 +75,7 @@ MfVisualizerElement >> addElementsLevelOne: aName [
 	sect addChild: name
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 MfVisualizerElement >> addElementsLevelThree: aName [
 
 	| number label sect |
@@ -108,7 +110,7 @@ MfVisualizerElement >> addElementsLevelThree: aName [
 				 { (BlTextForegroundAttribute paint: Color yellow) }) ]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 MfVisualizerElement >> addElementsLevelTwo: aName [
 
 	| pattern sect |
@@ -123,6 +125,7 @@ MfVisualizerElement >> addElementsLevelTwo: aName [
 	patternArray at: aName put: pattern.
 	sect addChild: pattern
 ]
+
 
 { #category : #adding }
 MfVisualizerElement >> addIconToInstrument: aName [
@@ -148,7 +151,7 @@ MfVisualizerElement >> addInstrument: aName [
 	'ADDED INSTRUMENT' , nbTracks asString traceCr
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 MfVisualizerElement >> addLabelToSliders: aSlider secondSlider: anOtherSlider [
 
 	| label1 label2 sect |
@@ -165,11 +168,12 @@ MfVisualizerElement >> addLabelToSliders: aSlider secondSlider: anOtherSlider [
 	sect addChild: label2
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MfVisualizerElement >> animation [
 
 	^ animation
 ]
+
 
 { #category : #action }
 MfVisualizerElement >> cleanRow [
@@ -194,7 +198,7 @@ MfVisualizerElement >> cleanVisualizer [
 	nbTracks := 0
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MfVisualizerElement >> initAnimation: nbSteps [
 
 	animation := BlAnimation new duration: (nbSteps) seconds.
@@ -204,7 +208,7 @@ MfVisualizerElement >> initAnimation: nbSteps [
 	self addAnimation: animation
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MfVisualizerElement >> initLevelRepresentation: aName [
 
 	level == 1 ifTrue: [ self addElementsLevelOne: aName ].
@@ -214,7 +218,7 @@ MfVisualizerElement >> initLevelRepresentation: aName [
 		level == 5 ifTrue: [ self addElementsLevelFour: aName ].
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MfVisualizerElement >> initSections [
 
 	| y |
@@ -231,7 +235,7 @@ MfVisualizerElement >> initSections [
 		self addChild: sect ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MfVisualizerElement >> initialize [
 
 	super initialize.
@@ -252,23 +256,24 @@ MfVisualizerElement >> initialize [
 	nbTracks := 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MfVisualizerElement >> level [ 
 ^level
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MfVisualizerElement >> level: aLevel [
 
 	level := aLevel.
 	
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MfVisualizerElement >> nbTracks [
 
 ^nbTracks 
 ]
+
 
 { #category : #accessing }
 MfVisualizerElement >> nbTracks: anInteger [
@@ -282,7 +287,7 @@ MfVisualizerElement >> patternArray [
 ^patternArray 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MfVisualizerElement >> setLabelToSlider: aName firstSlider: aSlider secondSlider: anOtherSlider [
 
 	| isValidName |
@@ -341,6 +346,7 @@ MfVisualizerElement >> setLabelToSlider: aName firstSlider: aSlider secondSlider
 		self addLabelToSliders: aSlider secondSlider: anOtherSlider ]
 ]
 
+
 { #category : #accessing }
 MfVisualizerElement >> sliderArray [		
 	
@@ -353,7 +359,7 @@ MfVisualizerElement >> squareArray [
 ^squareArray
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 MfVisualizerElement >> textFrom: aName [
 
 	^ aName asRopedText attributes:

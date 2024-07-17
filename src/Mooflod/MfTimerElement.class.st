@@ -1,6 +1,6 @@
 Class {
-	#name : #MfTimerElement,
-	#superclass : #ToElement,
+	#name : 'MfTimerElement',
+	#superclass : 'ToElement',
 	#instVars : [
 		'anim',
 		'timerValue',
@@ -12,10 +12,11 @@ Class {
 	#classVars : [
 		'value'
 	],
+
 	#category : #'Mooflod-TimerWidget'
 }
 
-{ #category : #example }
+{ #category : 'example' }
 MfTimerElement class >> exampleSimpleTimer [
 
 	<script>
@@ -30,7 +31,7 @@ MfTimerElement class >> exampleSimpleTimer [
 	^ timer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MfTimerElement >> annulusGeometry [
 
 	^ BlAnnulusSectorGeometry new
@@ -39,23 +40,24 @@ MfTimerElement >> annulusGeometry [
 		  innerRadius: 0.865
 ]
 
-{ #category : #'visual properties' }
+{ #category : 'visual properties' }
 MfTimerElement >> backgroundPaint [ 
 
 	^ Color black.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MfTimerElement >> currentAngle [
 
 ^currentAngle .
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MfTimerElement >> defaultGeometry [
 
 	^ BlCircleGeometry new matchExtent: self extent 
 ]
+
 
 { #category : #initialization }
 MfTimerElement >> initialize [
@@ -91,7 +93,7 @@ MfTimerElement >> initializeAnimation [
 	self addAnimation: anim
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MfTimerElement >> initializeAnnulus [
 
 	annulus := BlElement new background: Color yellow.
@@ -104,7 +106,7 @@ MfTimerElement >> initializeAnnulus [
 	self initializeAnimation
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MfTimerElement >> initializeTimerValue [
 
 	decreasingAngleStep := 360 / value.
@@ -121,13 +123,13 @@ MfTimerElement >> initializeTimerValue [
 	self addChild: timerValue
 ]
 
-{ #category : #skin }
+{ #category : 'skin' }
 MfTimerElement >> newMooflodSkin [ 
 
 	^ MfTimerElementSkin new
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MfTimerElement >> replaceTimerTextValue: aValue [
 
 	self children size = 2
@@ -145,6 +147,7 @@ MfTimerElement >> replaceTimerTextValue: aValue [
 		textArray at: 'text' put: timerValue.
 	self addChild: timerValue
 ]
+
 
 { #category : #accessing }
 MfTimerElement >> setValue: aValue [
@@ -164,7 +167,7 @@ MfTimerElement >> timerValue [
 ^timerValue
 ]
 
-{ #category : #'visual properties' }
+{ #category : 'visual properties' }
 MfTimerElement >> updateAnnulusAngle: newAngle [
 
 	annulus geometry: (BlAnnulusSectorGeometry new
@@ -173,7 +176,7 @@ MfTimerElement >> updateAnnulusAngle: newAngle [
 			 innerRadius: 0.865)
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 MfTimerElement >> updateValue [
 
 	value := value - 1.
@@ -181,12 +184,12 @@ MfTimerElement >> updateValue [
 	self replaceTimerTextValue: value
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 MfTimerElement >> value [ 
 		^value.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MfTimerElement >> value: aValue [
 
 	value := aValue.

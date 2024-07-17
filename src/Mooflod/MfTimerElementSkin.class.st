@@ -4,7 +4,7 @@ Class {
 	#category : #'Mooflod-TimerWidget'
 }
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 MfTimerElementSkin >> installLookEvent: anEvent [
 	"when installing the skin, changes the properties of widget mentionned down here"
 
