@@ -6,14 +6,14 @@ Class {
 		'timerValue',
 		'annulus',
 		'currentAngle',
-		'decreasingAngleStep'
+		'decreasingAngleStep',
+		'textArray'
 	],
 	#classVars : [
 		'value'
 	],
-	#category : 'Mooflod-TimerWidget',
-	#package : 'Mooflod',
-	#tag : 'TimerWidget'
+
+	#category : #'Mooflod-TimerWidget'
 }
 
 { #category : 'example' }
@@ -58,7 +58,19 @@ MfTimerElement >> defaultGeometry [
 	^ BlCircleGeometry new matchExtent: self extent 
 ]
 
-{ #category : 'initialization' }
+
+{ #category : #initialization }
+MfTimerElement >> initialize [
+
+	super initialize.
+	value := 60.
+	textArray := Dictionary new.
+	self initializeTimerValue.
+	self initializeAnnulus.
+	
+]
+
+{ #category : #initialization }
 MfTimerElement >> initializeAnimation [
 
 	| started |
@@ -84,14 +96,14 @@ MfTimerElement >> initializeAnimation [
 { #category : 'initialization' }
 MfTimerElement >> initializeAnnulus [
 
-	annulus := BlElement new background: Color lightOrange.
-	annulus size: 300 @ 300.
+	annulus := BlElement new background: Color yellow.
+	annulus size: 65 @ 65.
 	annulus geometry: self annulusGeometry.
 	annulus constraintsDo: [ :c |
 		c frame horizontal alignCenter.
 		c frame vertical alignCenter ].
 	self addChild: annulus.
-	self initializeAnimation 
+	self initializeAnimation
 ]
 
 { #category : 'initialization' }
@@ -99,8 +111,16 @@ MfTimerElement >> initializeTimerValue [
 
 	decreasingAngleStep := 360 / value.
 	currentAngle := 360.
-	self replaceTimerTextValue: value.
-	self initializeAnnulus
+	timerValue := BlTextElement new.
+	timerValue text: value asString asRopedText.
+	timerValue text fontSize: 11.
+	timerValue text attributes:
+		{ (BlTextForegroundAttribute paint: Color yellow) }.
+	timerValue constraintsDo: [ :c |
+		c frame horizontal alignCenter.
+		c frame vertical alignCenter ].
+	textArray at: 'text' put: timerValue .
+	self addChild: timerValue
 ]
 
 { #category : 'skin' }
@@ -112,18 +132,36 @@ MfTimerElement >> newMooflodSkin [
 { #category : 'initialization' }
 MfTimerElement >> replaceTimerTextValue: aValue [
 
+	self children size = 2
+		ifTrue: [ (textArray at: 'text') removeFromParent ]
+		ifFalse: [  ].
+
 	timerValue := BlTextElement new.
 	timerValue text: aValue asString asRopedText.
-	timerValue text fontSize: 100.
+	timerValue text fontSize: 11.
 	timerValue text attributes:
-		{ (BlTextForegroundAttribute paint: Color lightOrange) }.
+		{ (BlTextForegroundAttribute paint: Color yellow) }.
 	timerValue constraintsDo: [ :c |
 		c frame horizontal alignCenter.
 		c frame vertical alignCenter ].
+		textArray at: 'text' put: timerValue.
 	self addChild: timerValue
 ]
 
-{ #category : 'accessing' }
+
+{ #category : #accessing }
+MfTimerElement >> setValue: aValue [
+
+	self value:  69 + (12 * ((aValue / 440) log: 2)).
+]
+
+{ #category : #accessing }
+MfTimerElement >> textArray [ 
+
+^textArray 
+]
+
+{ #category : #accessing }
 MfTimerElement >> timerValue [
 
 ^timerValue
@@ -155,5 +193,5 @@ MfTimerElement >> value [
 MfTimerElement >> value: aValue [
 
 	value := aValue.
-	self initializeTimerValue .
+	self replaceTimerTextValue: aValue 
 ]

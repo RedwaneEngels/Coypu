@@ -125,7 +125,14 @@ MfMasterDelayElement >> rColor [
 	^ 0 + (12.75 * (delayTime * 10))
 ]
 
-{ #category : 'internal' }
+
+{ #category : #initialization }
+MfMasterDelayElement >> setValue: aFloat [
+
+	self delayAmount: (aFloat * 98 ) + 0.1
+]
+
+{ #category : #internal }
 MfMasterDelayElement >> updateCircles [
 
 	currentX := 104.

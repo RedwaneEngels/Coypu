@@ -8,9 +8,8 @@ Class {
 	#instVars : [
 		'keymap'
 	],
-	#category : 'Mooflod-KeyboardWidget',
-	#package : 'Mooflod',
-	#tag : 'KeyboardWidget'
+
+	#category : #'Mooflod-KeyboardWidget'
 }
 
 { #category : 'examples' }
@@ -26,13 +25,12 @@ MfKeyboardElement class >> exampleSimpleKeyboard [
 	<script>
 	| k space |
 	k := MfKeyboardElement new.
-	space := BlSpace new.
-	space root
-		background: Color orange;
-		layout: BlFlowLayout horizontal.
+	space := BlSpace new extent: World extent x / 6 @ World extent y.
+	space useMorphicHost.
+	space toTheme: MfMooflodTheme new.
 	k transformDo: [ :c |
-		c rotateBy: -90.
-		c translateBy: 50 @ 350 ].
+		c rotateBy: 90.
+		c translateBy: -270 @ 300 ].
 	space root addChild: k.
 	space show.
 	^ space
@@ -59,6 +57,7 @@ MfKeyboardElement >> initialize [
 	self initializeKeys.
 	self initializeEventListeners.
 	self requestFocus.
+	self receiveKeyEventsFromLastPlayground 
 ]
 
 { #category : 'initialization' }
@@ -201,7 +200,35 @@ MfKeyboardElement >> newButton: anExtent [
 		  background: Color black
 ]
 
-{ #category : 'geometry' }
+
+{ #category : #'as yet unclassified' }
+MfKeyboardElement >> openInMooflod [
+
+	| space |
+	space := BlSpace new extent: World extent x / 6 @ World extent y.
+	space useMorphicHost.
+	space toTheme: MfMooflodTheme new.
+
+	self transformDo: [ :c |
+		c rotateBy: 90.
+		c translateBy: -270 @ 250 ].
+	space root addChild: self.
+
+	space root position: 0 @ 20.
+	space show.
+	^ space
+]
+
+{ #category : #'as yet unclassified' }
+MfKeyboardElement >> receiveKeyEventsFromLastPlayground [
+
+StPlayground allSubInstances last millerList millerListPresenter pages first text eventHandler
+    whenKeyDownDo: [ :event | BlSpace simulateKeyDownOn: self key: event key];
+    whenKeyUpDo: [ :event | BlSpace simulateKeyUpOn: self key: event key ].
+
+]
+
+{ #category : #geometry }
 MfKeyboardElement >> rowHeight [
 	^ 35
 ]
