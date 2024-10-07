@@ -11,8 +11,6 @@ BaselineOfCoypu >> baseline: spec [
 	<baseline>
 	spec for: #common do: [ "External dependencies"
 		spec
-		        package: 'Phausto'
-			with: [ spec repository: 'github://lucretiomsp/phausto:main' ];
 			package: 'OSC'
 			with: [ spec repository: 'github://Ducasse/OSC/src' ];
 			baseline: 'Toplo'
