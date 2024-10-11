@@ -178,7 +178,7 @@ Performance >> freq [
 Performance >> freq: aDurationInSeconds [
 	"use for playback speed"
 
-	freq := aDurationInSeconds asFloat
+	freq := aDurationInSeconds 
 ]
 
 { #category : 'LiveCoding - Performance' }
