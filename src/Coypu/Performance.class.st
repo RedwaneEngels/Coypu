@@ -168,6 +168,18 @@ Performance >> dirtMIDIDevice: aString [
 	dirtMIDIDevice := aString
 ]
 
+{ #category : 'as yet unclassified' }
+Performance >> forDsp: aDsp [
+
+| p |
+
+p := self class uniqueInstance .
+p performer: PerformerPhaust new.
+p activeDSP: aDsp.
+
+^ p
+]
+
 { #category : 'accessing' }
 Performance >> freq [
 	"better to convert it to Float to avoid OSC sending issues"
